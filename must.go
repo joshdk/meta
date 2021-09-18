@@ -6,6 +6,7 @@ package meta
 
 import (
 	"fmt"
+	u "net/url"
 	"time"
 )
 
@@ -54,4 +55,29 @@ func mustTime(path, raw string) *time.Time {
 	}
 
 	panic(fmt.Errorf("malformed ldflags value for %s", path))
+}
+
+// mustURL validates that the given value is a properly formatted URL.
+func mustURL(path, raw string) *u.URL {
+	if raw == "" {
+		return nil
+	}
+
+	// Parse the URL.
+	parsed, err := u.Parse(raw)
+	if err != nil {
+		panic(fmt.Errorf("malformed ldflags value for %s", path))
+	}
+
+	// Require that the scheme is http:// or https://.
+	if parsed.Scheme != "http" && parsed.Scheme != "https" {
+		panic(fmt.Errorf("malformed ldflags value for %s", path))
+	}
+
+	// Require that the URL contained a host.
+	if parsed.Host == "" {
+		panic(fmt.Errorf("malformed ldflags value for %s", path))
+	}
+
+	return parsed
 }

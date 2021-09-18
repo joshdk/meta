@@ -9,11 +9,19 @@
 //
 // List of variable names:
 //   jdk.sh/meta.date
+//   jdk.sh/meta.desc
+//   jdk.sh/meta.docs
+//   jdk.sh/meta.name
 //   jdk.sh/meta.sha
+//   jdk.sh/meta.title
+//   jdk.sh/meta.url
 //   jdk.sh/meta.version
 package meta
 
-import "time"
+import (
+	u "net/url"
+	"time"
+)
 
 // date is the time that the application was built. Supports several common
 // formats.
@@ -33,6 +41,53 @@ var dateParsed = mustTime("jdk.sh/meta.date", date)
 // Date is the time at which the application was built.
 func Date() *time.Time {
 	return dateParsed
+}
+
+// desc is a description for the application. Typically a longer statement
+// describing what the application does.
+//
+// Variable name:
+//   jdk.sh/meta.desc
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.desc=A super simple demonstration application'"
+var desc string
+
+// Description is the description of the application.
+func Description() string {
+	return desc
+}
+
+// docs is a URL for application documentation. Typically links to a page where
+// a user can find technical documentation.
+//
+// Variable name:
+//   jdk.sh/meta.docs
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.docs=https://example.com/demo/README.md'"
+var docs string
+
+var docsParsed = mustURL("jdk.sh/meta.docs", docs)
+
+// Docs is the documentation URL for the application.
+func Docs() *u.URL {
+	return docsParsed
+}
+
+// name is the name of the application. Typically named the same as the binary,
+// or for display in an error or help message.
+//
+// Variable name:
+//   jdk.sh/meta.name
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.name=demo-app'"
+var name string
+
+// Name is the name of the application.
+func Name() string {
+	return name
 }
 
 // sha is the git SHA that was used to build the application. A 40 character
@@ -60,6 +115,38 @@ func ShortSHA() string {
 	}
 
 	return shaParsed[:7]
+}
+
+// title is the title of the application. Typically a full or non-abbreviated
+// form of the application name.
+//
+// Variable name:
+//   jdk.sh/meta.title
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.title=Demo Application'"
+var title string
+
+// Title is the title of the application.
+func Title() string {
+	return title
+}
+
+// url is a URL for the application homepage. Typically links to a page where a
+// user can learn more about the application.
+//
+// Variable name:
+//   jdk.sh/meta.url
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.url=https://example.com/demo'"
+var url string
+
+var urlParsed = mustURL("jdk.sh/meta.url", url)
+
+// URL is the homepage URL for the application.
+func URL() *u.URL {
+	return urlParsed
 }
 
 // version is the version slug. The value can be used to point back to
