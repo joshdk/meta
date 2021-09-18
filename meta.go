@@ -20,8 +20,14 @@ package meta
 
 import (
 	u "net/url"
+	"runtime"
 	"time"
 )
+
+// Arch is the architecture target that the application is running on.
+func Arch() string {
+	return runtime.GOARCH
+}
 
 // date is the time that the application was built. Supports several common
 // formats.
@@ -75,6 +81,11 @@ func Docs() *u.URL {
 	return docsParsed
 }
 
+// Go is the version of the Go runtime that the application is running on.
+func Go() string {
+	return runtime.Version()
+}
+
 // name is the name of the application. Typically named the same as the binary,
 // or for display in an error or help message.
 //
@@ -88,6 +99,11 @@ var name string
 // Name is the name of the application.
 func Name() string {
 	return name
+}
+
+// OS is the operating system target that the application is running on.
+func OS() string {
+	return runtime.GOOS
 }
 
 // sha is the git SHA that was used to build the application. A 40 character
