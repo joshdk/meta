@@ -20,6 +20,7 @@
 //   jdk.sh/meta.name
 //   jdk.sh/meta.note
 //   jdk.sh/meta.sha
+//   jdk.sh/meta.src
 //   jdk.sh/meta.title
 //   jdk.sh/meta.url
 //   jdk.sh/meta.version
@@ -30,6 +31,11 @@ import (
 	"runtime"
 	"time"
 )
+
+// Arch is the architecture target that the application is running on.
+func Arch() string {
+	return runtime.GOARCH
+}
 
 // author is the name of the application author. May contain their name, email
 // address, or optionally both.
@@ -70,11 +76,6 @@ var authorURLParsed = mustURL("jdk.sh/meta.author_url", author_url)
 // AuthorURL is the homepage URL for the application author.
 func AuthorURL() *u.URL {
 	return authorURLParsed
-}
-
-// Arch is the architecture target that the application is running on.
-func Arch() string {
-	return runtime.GOARCH
 }
 
 // copyright is the copyright for the application. Typically the name if the
@@ -265,6 +266,23 @@ func ShortSHA() string {
 	}
 
 	return shaParsed[:7]
+}
+
+// src is a URL for the application source code. Typically links to a
+// repository where a user can browse or clone the source code.
+//
+// Variable name:
+//   jdk.sh/meta.src
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.src=https://example.com/demo.git'"
+var src string
+
+var srcParsed = mustURL("jdk.sh/meta.src", src)
+
+// Source is the URL for the application source code.
+func Source() *u.URL {
+	return srcParsed
 }
 
 // title is the title of the application. Typically a full or non-abbreviated
