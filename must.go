@@ -6,9 +6,25 @@ package meta
 
 import (
 	"fmt"
+	"net/mail"
 	u "net/url"
 	"time"
 )
+
+// mustAuthor validates that the given value contains the author's name and
+// potentially email.
+func mustAuthor(_, raw string) (string, string) {
+	if raw == "" {
+		return "", ""
+	}
+
+	parsed, err := mail.ParseAddress(raw)
+	if err != nil {
+		return raw, ""
+	}
+
+	return parsed.Name, parsed.Address
+}
 
 // mustSHA validates that the given value is a properly formatted git SHA.
 func mustSHA(path, raw string) string {
