@@ -8,9 +8,12 @@
 // build. See https://pkg.go.dev/cmd/go and https://pkg.go.dev/cmd/link.
 //
 // List of variable names:
+//   jdk.sh/meta.copyright
 //   jdk.sh/meta.date
 //   jdk.sh/meta.desc
 //   jdk.sh/meta.docs
+//   jdk.sh/meta.license
+//   jdk.sh/meta.license_url
 //   jdk.sh/meta.name
 //   jdk.sh/meta.sha
 //   jdk.sh/meta.title
@@ -27,6 +30,23 @@ import (
 // Arch is the architecture target that the application is running on.
 func Arch() string {
 	return runtime.GOARCH
+}
+
+// copyright is the copyright for the application. Typically the name if the
+// author or organization, sometimes prefixed with a year or year range.
+//
+// Variable name:
+//   jdk.sh/meta.copyright
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.copyright=John Doe'"
+//   -ldflags "-X 'jdk.sh/meta.copyright=2021 Jane Doe'"
+//   -ldflags "-X 'jdk.sh/meta.copyright=2019-2021 Jim Doe'"
+var copyright string
+
+// Copyright is the copyright for the application.
+func Copyright() string {
+	return copyright
 }
 
 // date is the time that the application was built. Supports several common
@@ -84,6 +104,39 @@ func Docs() *u.URL {
 // Go is the version of the Go runtime that the application is running on.
 func Go() string {
 	return runtime.Version()
+}
+
+// license is the license identifier for the application. Should not the full
+// license body, but one of the identifiers from https://spdx.org/licenses, so
+// that the type of license can be easily determined.
+//
+// Variable name:
+//   jdk.sh/meta.license
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.license=Apache-2.0'"
+//   -ldflags "-X 'jdk.sh/meta.license=MIT'"
+//   -ldflags "-X 'jdk.sh/meta.license=WTFPL'"
+var license string
+
+func License() string {
+	return license
+}
+
+// license_url is a URL for application license. Typically links to a page
+// where the verbatim license body is available.
+//
+// Variable name:
+//   jdk.sh/meta.license_url
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.license_url=https://example.com/demo/LICENSE.txt'"
+var license_url string
+
+var licenseURLParsed = mustURL("jdk.sh/meta.license_url", license_url)
+
+func LicenseURL() *u.URL {
+	return licenseURLParsed
 }
 
 // name is the name of the application. Typically named the same as the binary,
