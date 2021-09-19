@@ -162,6 +162,7 @@ func Go() string {
 //   -ldflags "-X 'jdk.sh/meta.license=WTFPL'"
 var license string
 
+// License is the license identifier for the application.
 func License() string {
 	return license
 }
@@ -178,6 +179,7 @@ var license_url string
 
 var licenseURLParsed = mustURL("jdk.sh/meta.license_url", license_url)
 
+// LicenseURL is the license URL for the application.
 func LicenseURL() *u.URL {
 	return licenseURLParsed
 }
