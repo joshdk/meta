@@ -18,6 +18,7 @@
 //   jdk.sh/meta.license
 //   jdk.sh/meta.license_url
 //   jdk.sh/meta.name
+//   jdk.sh/meta.note
 //   jdk.sh/meta.sha
 //   jdk.sh/meta.title
 //   jdk.sh/meta.url
@@ -216,6 +217,22 @@ var name string
 // Name is the name of the application.
 func Name() string {
 	return name
+}
+
+// note is an arbitrary message for the application. Can be used to store a
+// message about the build environment, release, etc.
+//
+// Variable name:
+//   jdk.sh/meta.note
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.note=Built on CI server ...'"
+//   -ldflags "-X 'jdk.sh/meta.note=This release is dedicated to ...'"
+var note string
+
+// Note is an arbitrary message for the application.
+func Note() string {
+	return note
 }
 
 // OS is the operating system target that the application is running on.
