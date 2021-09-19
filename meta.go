@@ -13,6 +13,7 @@
 //   jdk.sh/meta.copyright
 //   jdk.sh/meta.date
 //   jdk.sh/meta.desc
+//   jdk.sh/meta.dev
 //   jdk.sh/meta.docs
 //   jdk.sh/meta.license
 //   jdk.sh/meta.license_url
@@ -125,6 +126,24 @@ var desc string
 // Description is the description of the application.
 func Description() string {
 	return desc
+}
+
+// dev is the development status for the application. An application in
+// development mode may indicate that it's using experimental or untested
+// features, and should be used with caution.
+//
+// Variable name:
+//   jdk.sh/meta.dev
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.dev=true'"
+var dev string
+
+var devParsed = mustBool("jdk.sh/meta.dev", dev)
+
+// Development is the development status for the application.
+func Development() bool {
+	return devParsed
 }
 
 // docs is a URL for application documentation. Typically links to a page where

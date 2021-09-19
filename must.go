@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net/mail"
 	u "net/url"
+	"strconv"
 	"time"
 )
 
@@ -24,6 +25,19 @@ func mustAuthor(_, raw string) (string, string) {
 	}
 
 	return parsed.Name, parsed.Address
+}
+
+// mustBool validates that the given value is a properly formatted boolean.
+func mustBool(_, raw string) bool {
+	if raw == "" {
+		return false
+	}
+
+	if b, err := strconv.ParseBool(raw); err == nil {
+		return b
+	}
+
+	return false
 }
 
 // mustSHA validates that the given value is a properly formatted git SHA.
