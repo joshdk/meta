@@ -8,6 +8,8 @@
 // build. See https://pkg.go.dev/cmd/go and https://pkg.go.dev/cmd/link.
 //
 // List of variable names:
+//   jdk.sh/meta.author
+//   jdk.sh/meta.author_url
 //   jdk.sh/meta.copyright
 //   jdk.sh/meta.date
 //   jdk.sh/meta.desc
@@ -26,6 +28,47 @@ import (
 	"runtime"
 	"time"
 )
+
+// author is the name of the application author. May contain their name, email
+// address, or optionally both.
+//
+// Variable name:
+//   jdk.sh/meta.author
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.author=John Doe'"
+//   -ldflags "-X 'jdk.sh/meta.author=jdoe@example.com'"
+//   -ldflags "-X 'jdk.sh/meta.author=Jane Doe <jdoe@example.com>'"
+var author string
+
+var authorParsed, authorEmailParsed = mustAuthor("jdk.sh/meta.author", author)
+
+// Author is the name of the application author.
+func Author() string {
+	return authorParsed
+}
+
+// AuthorEmail is the email address for the application author.
+func AuthorEmail() string {
+	return authorEmailParsed
+}
+
+// author_url is a URL for the application author. Typically links to the
+// author's personal homepage or Github profile.
+//
+// Variable name:
+//   jdk.sh/meta.author_url
+//
+// Examples:
+//   -ldflags "-X 'jdk.sh/meta.author_url=https://example.com/profile'"
+var author_url string
+
+var authorURLParsed = mustURL("jdk.sh/meta.author_url", author_url)
+
+// AuthorURL is the homepage URL for the application author.
+func AuthorURL() *u.URL {
+	return authorURLParsed
+}
 
 // Arch is the architecture target that the application is running on.
 func Arch() string {
