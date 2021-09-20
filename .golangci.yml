@@ -1,0 +1,11 @@
+linters:
+  enable-all: true
+  disable:
+    - gochecknoglobals
+    - goerr113
+
+issues:
+  exclude-use-default: true
+  exclude:
+    - don't use underscores in Go names # golint and revive
+    - should not use underscores in Go names # stylecheck
