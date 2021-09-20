@@ -3,9 +3,13 @@ linters:
   disable:
     - gochecknoglobals
     - goerr113
+    - testpackage
+    - thelper
 
 issues:
   exclude-use-default: true
   exclude:
+    - are missing in URL # exhaustivestruct
+    - does not use range value # paralleltest
     - don't use underscores in Go names # golint and revive
     - should not use underscores in Go names # stylecheck
