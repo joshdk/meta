@@ -6,6 +6,58 @@ import (
 	"testing"
 )
 
+func TestMustSHA(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		input    string
+		expected string
+		panic    bool
+	}{
+		{
+			input:    "",
+			expected: "",
+		},
+		{
+			// 7 characters.
+			input: "0000000",
+			panic: true,
+		},
+		{
+			// 39 characters.
+			input: "000000000000000000000000000000000000000",
+			panic: true,
+		},
+		{
+			// 40 characters.
+			input:    "0000000000000000000000000000000000000000",
+			expected: "0000000000000000000000000000000000000000",
+		},
+		{
+			// 41 characters.
+			input: "00000000000000000000000000000000000000000",
+			panic: true,
+		},
+		{
+			// 40 characters, but one isn't hex.
+			input: "000000000000000000_000000000000000000000",
+			panic: true,
+		},
+	}
+
+	for i, test := range tests {
+		test := test
+
+		t.Run(fmt.Sprint(i), func(t *testing.T) {
+			t.Parallel()
+
+			defer equalPanic(t, test.panic)
+			actual := mustSHA("", test.input)
+			equalString(t, test.expected, actual)
+		})
+	}
+}
+
 func TestMustURL(t *testing.T) {
 	t.Parallel()
 
@@ -79,6 +131,14 @@ func equalPanic(t *testing.T, panics bool) {
 		t.Fatal("expected a panic")
 	case err != nil && !panics:
 		t.Fatal("did not expect a panic")
+	}
+}
+
+func equalString(t *testing.T, expected, actual string) {
+	t.Helper()
+
+	if actual != expected {
+		t.Fatalf("expected %q but got %q", expected, actual)
 	}
 }
 
