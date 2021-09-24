@@ -4,6 +4,7 @@ import (
 	"fmt"
 	u "net/url"
 	"testing"
+	"time"
 )
 
 func TestMustSHA(t *testing.T) {
@@ -54,6 +55,60 @@ func TestMustSHA(t *testing.T) {
 			defer equalPanic(t, test.panic)
 			actual := mustSHA("", test.input)
 			equalString(t, test.expected, actual)
+		})
+	}
+}
+
+func TestMustTime(t *testing.T) {
+	t.Parallel()
+
+	expected := time.Date(2019, 8, 23, 18, 0, 0, 0, time.UTC)
+
+	tests := []struct {
+		input    string
+		expected *time.Time
+		panic    bool
+	}{
+		{
+			input:    "",
+			expected: nil,
+		},
+		{
+			input: "today",
+			panic: true,
+		},
+		{
+			// $ date -R
+			input:    "Fri, 23 Aug 2019 11:00:00 -0700",
+			expected: &expected,
+		},
+		{
+			// $ date -u +%Y-%m-%dT%H:%M:%SZ
+			input:    "2019-08-23T18:00:00Z",
+			expected: &expected,
+		},
+		{
+			// $ date -Iseconds
+			// $ date --iso-8601=seconds
+			input:    "2019-08-23T11:00:00-07:00",
+			expected: &expected,
+		},
+		{
+			// $ date --iso-8601=seconds (no colon)
+			input:    "2019-08-23T11:00:00-0700",
+			expected: &expected,
+		},
+	}
+
+	for i, test := range tests {
+		test := test
+
+		t.Run(fmt.Sprint(i), func(t *testing.T) {
+			t.Parallel()
+
+			defer equalPanic(t, test.panic)
+			actual := mustTime("", test.input)
+			equalTime(t, test.expected, actual)
 		})
 	}
 }
@@ -139,6 +194,21 @@ func equalString(t *testing.T, expected, actual string) {
 
 	if actual != expected {
 		t.Fatalf("expected %q but got %q", expected, actual)
+	}
+}
+
+func equalTime(t *testing.T, expected, actual *time.Time) {
+	t.Helper()
+
+	switch {
+	case expected == nil && actual == nil:
+		return
+	case expected != nil && actual == nil:
+		t.Fatalf("expected %v but got nil", expected)
+	case expected == nil && actual != nil:
+		t.Fatalf("expected nil but got %v", actual)
+	case *expected != *actual:
+		t.Fatalf("expected %v but got %v", expected, actual)
 	}
 }
 
