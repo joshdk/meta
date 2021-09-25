@@ -7,6 +7,49 @@ import (
 	"time"
 )
 
+func TestMustBool(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		input    string
+		expected bool
+	}{
+		{
+			input:    "",
+			expected: false,
+		},
+		{
+			input:    "false",
+			expected: false,
+		},
+		{
+			input:    "FALSE",
+			expected: false,
+		},
+		{
+			input:    "true",
+			expected: true,
+		},
+		{
+			input:    "TRUE",
+			expected: true,
+		},
+	}
+
+	for i, test := range tests {
+		test := test
+
+		t.Run(fmt.Sprint(i), func(t *testing.T) {
+			t.Parallel()
+
+			actual := mustBool("", test.input)
+			if test.expected != actual {
+				t.Fatalf("expected %v but got %v", test.expected, actual)
+			}
+		})
+	}
+}
+
 func TestMustSHA(t *testing.T) {
 	t.Parallel()
 
