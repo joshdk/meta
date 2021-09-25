@@ -7,6 +7,68 @@ import (
 	"time"
 )
 
+func TestMustAuthor(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		input         string
+		expectedName  string
+		expectedEmail string
+	}{
+		{
+			input:         "",
+			expectedName:  "",
+			expectedEmail: "",
+		},
+		{
+			input:         "John Doe",
+			expectedName:  "John Doe",
+			expectedEmail: "",
+		},
+		{
+			input:         "John Doe",
+			expectedName:  "John Doe",
+			expectedEmail: "",
+		},
+		{
+			input:         "jdoe@example.com",
+			expectedName:  "",
+			expectedEmail: "jdoe@example.com",
+		},
+		{
+			input:         "<jdoe@example.com>",
+			expectedName:  "",
+			expectedEmail: "jdoe@example.com",
+		},
+		{
+			input:         "Jane Doe <jdoe@example.com>",
+			expectedName:  "Jane Doe",
+			expectedEmail: "jdoe@example.com",
+		},
+		{
+			input:         "Jane Doe <example@>",
+			expectedName:  "Jane Doe <example@>",
+			expectedEmail: "",
+		},
+	}
+
+	for i, test := range tests {
+		test := test
+
+		t.Run(fmt.Sprint(i), func(t *testing.T) {
+			t.Parallel()
+
+			actualName, actualEmail := mustAuthor("", test.input)
+			if test.expectedName != actualName {
+				t.Fatalf("expected %q but got %q", test.expectedName, actualName)
+			}
+			if test.expectedEmail != actualEmail {
+				t.Fatalf("expected %q but got %q", test.expectedEmail, actualEmail)
+			}
+		})
+	}
+}
+
 func TestMustBool(t *testing.T) {
 	t.Parallel()
 
