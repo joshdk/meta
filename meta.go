@@ -102,10 +102,12 @@ func Copyright() string {
 //   jdk.sh/meta.date
 //
 // Examples:
-//   -ldflags "-X 'jdk.sh/meta.date=Wed Sep 15 06:55:44 PDT 2021'"
-//   -ldflags "-X 'jdk.sh/meta.date=2021-09-15T13:56:43Z'"
-//   -ldflags "-X 'jdk.sh/meta.date=$(date)'"
+//   -ldflags "-X 'jdk.sh/meta.date=$(date -R)'"
+//   -ldflags "-X 'jdk.sh/meta.date=Fri, 23 Aug 2019 11:00:00 -0700'"
+//   -ldflags "-X 'jdk.sh/meta.date=$(date -Iseconds)'"
+//   -ldflags "-X 'jdk.sh/meta.date=2019-08-23T11:00:00-07:00'"
 //   -ldflags "-X 'jdk.sh/meta.date=$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
+//   -ldflags "-X 'jdk.sh/meta.date=2019-08-23T18:00:00Z'"
 var date string
 
 var dateParsed = mustTime("jdk.sh/meta.date", date)

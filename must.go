@@ -66,20 +66,25 @@ func mustSHA(path, raw string) string {
 }
 
 // mustTime validates that the given value is a properly formatted timestamp.
+// All timestamps are converted to UTC.
 func mustTime(path, raw string) *time.Time {
 	if raw == "" {
 		return nil
 	}
 
 	layouts := []string{
+		time.RFC1123Z,
 		time.RFC3339,
-		time.RFC3339Nano,
-		time.UnixDate,
+		// The format sometimes produced by `date --iso-8601=seconds`.
+		// See https://github.com/golang/go/issues/31113#issuecomment-482158617.
+		"2006-01-02T15:04:05Z0700",
 	}
 
 	// Try each layout until one parses.
 	for _, spec := range layouts {
 		if t, err := time.Parse(spec, raw); err == nil {
+			t = t.UTC()
+
 			return &t
 		}
 	}
