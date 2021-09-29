@@ -59,12 +59,8 @@ func TestMustAuthor(t *testing.T) {
 			t.Parallel()
 
 			actualName, actualEmail := mustAuthor("", test.input)
-			if test.expectedName != actualName {
-				t.Fatalf("expected %q but got %q", test.expectedName, actualName)
-			}
-			if test.expectedEmail != actualEmail {
-				t.Fatalf("expected %q but got %q", test.expectedEmail, actualEmail)
-			}
+			equalString(t, test.expectedName, actualName)
+			equalString(t, test.expectedEmail, actualEmail)
 		})
 	}
 }
@@ -108,6 +104,83 @@ func TestMustBool(t *testing.T) {
 			if test.expected != actual {
 				t.Fatalf("expected %v but got %v", test.expected, actual)
 			}
+		})
+	}
+}
+
+func TestMustSemver(t *testing.T) { // nolint:funlen
+	t.Parallel()
+
+	tests := []struct {
+		input              string
+		expectedMajor      string
+		expectedMinor      string
+		expectedPatch      string
+		expectedPreRelease string
+		expectedBuild      string
+	}{
+		{
+			input: "",
+		},
+		{
+			input: "latest",
+		},
+		{
+			input: "1.2",
+		},
+		{
+			input: "1.2.3.4",
+		},
+		{
+			input:         "1.2.3",
+			expectedMajor: "1",
+			expectedMinor: "2",
+			expectedPatch: "3",
+		},
+		{
+			input:              "1.2.3-rc.456",
+			expectedMajor:      "1",
+			expectedMinor:      "2",
+			expectedPatch:      "3",
+			expectedPreRelease: "rc.456",
+		},
+		{
+			input:         "1.2.3+build.789",
+			expectedMajor: "1",
+			expectedMinor: "2",
+			expectedPatch: "3",
+			expectedBuild: "build.789",
+		},
+		{
+			input:              "1.2.3-rc.456+build.789",
+			expectedMajor:      "1",
+			expectedMinor:      "2",
+			expectedPatch:      "3",
+			expectedPreRelease: "rc.456",
+			expectedBuild:      "build.789",
+		},
+		{
+			input:              "v1.2.3-rc.456+build.789",
+			expectedMajor:      "1",
+			expectedMinor:      "2",
+			expectedPatch:      "3",
+			expectedPreRelease: "rc.456",
+			expectedBuild:      "build.789",
+		},
+	}
+
+	for i, test := range tests {
+		test := test
+
+		t.Run(fmt.Sprint(i), func(t *testing.T) {
+			t.Parallel()
+
+			actualMajor, actualMinor, actualPatch, actualPreRelease, actualBuild := mustSemver("", test.input)
+			equalString(t, test.expectedMajor, actualMajor)
+			equalString(t, test.expectedMinor, actualMinor)
+			equalString(t, test.expectedPatch, actualPatch)
+			equalString(t, test.expectedPreRelease, actualPreRelease)
+			equalString(t, test.expectedBuild, actualBuild)
 		})
 	}
 }
