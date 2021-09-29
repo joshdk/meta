@@ -335,3 +335,35 @@ var version string
 func Version() string {
 	return version
 }
+
+var versionMajor, versionMinor, versionPatch, versionPreRelease, versionBuild = mustSemver("jdk.sh/version", version)
+
+// VersionMajor is the semver major version.
+// See https://semver.org.
+func VersionMajor() string {
+	return versionMajor
+}
+
+// VersionMinor is the semver minor version.
+// See https://semver.org.
+func VersionMinor() string {
+	return versionMinor
+}
+
+// VersionPatch is the semver patch version.
+// See https://semver.org.
+func VersionPatch() string {
+	return versionPatch
+}
+
+// VersionPreRelease is the semver pre-release version.
+// See https://semver.org.
+func VersionPreRelease() string {
+	return versionPreRelease
+}
+
+// VersionBuild is the semver build metadata version.
+// See https://semver.org.
+func VersionBuild() string {
+	return versionBuild
+}
