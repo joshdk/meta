@@ -7,7 +7,7 @@ linters:
     - thelper
 
 issues:
-  exclude-use-default: true
+  exclude-use-default: false
   exclude:
     - are missing in URL # exhaustivestruct
     - does not use range value # paralleltest

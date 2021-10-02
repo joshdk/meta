@@ -2,7 +2,7 @@
 // Use of this source code is governed by the MIT license,
 // a copy of which can be found in the LICENSE.txt file.
 
-// package meta provides common application metadata for use with go build and
+// Package meta provides common application metadata for use with go build and
 // ldflags. This package is intended to be imported, where variable values can
 // be set by using -X arguments, tp the -ldflags argument, when running go
 // build. See https://pkg.go.dev/cmd/go and https://pkg.go.dev/cmd/link.
