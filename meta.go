@@ -190,7 +190,7 @@ func License() string {
 	return license
 }
 
-// license_url is a URL for application license. Typically links to a page
+// license_url is a URL for the application license. Typically links to a page
 // where the verbatim license body is available.
 //
 // Variable name:
@@ -319,8 +319,9 @@ func URL() *u.URL {
 	return urlParsed
 }
 
-// version is the version slug. The value can be used to point back to
-// a specific tag or release.
+// version is the version slug for the application. The value can be used to
+// point back to a specific tag or release. Supports semver, see
+// https://semver.org.
 //
 // Variable name:
 //   jdk.sh/meta.version
