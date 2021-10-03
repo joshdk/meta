@@ -1,4 +1,8 @@
 [![License][license-badge]][license-link]
+[![Go Reference][godoc-badge]][godoc-link]
+[![Go Report Card][goreportcard-badge]][goreportcard-link]
+[![Actions][github-actions-badge]][github-actions-link]
+[![Releases][github-release-badge]][github-release-link]
 
 # Go Build Metadata
 
@@ -103,6 +107,14 @@ version v1.2.3 built on 2019-08-23 18:00:00 +0000 UTC
 
 This code is distributed under the [MIT License][license-link], see [LICENSE.txt][license-file] for more information.
 
-[license-badge]:  https://img.shields.io/badge/license-MIT-green.svg
-[license-file]:   https://github.com/joshdk/meta/blob/master/LICENSE.txt
-[license-link]:   https://opensource.org/licenses/MIT
+[github-actions-badge]:  https://github.com/joshdk/meta/workflows/Build/badge.svg
+[github-actions-link]:   https://github.com/joshdk/meta/actions
+[github-release-badge]:  https://img.shields.io/github/release/joshdk/meta/all.svg
+[github-release-link]:   https://github.com/joshdk/meta/releases
+[godoc-badge]:           https://pkg.go.dev/badge/jdk.sh/meta.svg
+[godoc-link]:            https://pkg.go.dev/jdk.sh/meta
+[goreportcard-badge]:    https://goreportcard.com/badge/jdk.sh/meta
+[goreportcard-link]:     https://goreportcard.com/report/jdk.sh/meta
+[license-badge]:         https://img.shields.io/badge/license-MIT-green.svg
+[license-file]:          https://github.com/joshdk/meta/blob/master/LICENSE.txt
+[license-link]:          https://opensource.org/licenses/MIT
