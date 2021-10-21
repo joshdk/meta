@@ -78,6 +78,7 @@ func TestMeta(t *testing.T) { // nolint:funlen
 			},
 			assertfn: func(t *testing.T, actual *info) {
 				equalTime(t, &expectedDate, actual.Date)
+				equalString(t, "2019-08-23T18:00:00Z", actual.DateFormat)
 			},
 		},
 		{

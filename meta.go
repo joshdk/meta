@@ -117,6 +117,16 @@ func Date() *time.Time {
 	return dateParsed
 }
 
+// DateFormat is the time at which the application was built, formatted using
+// the given layout.
+func DateFormat(layout string) string {
+	if dateParsed == nil {
+		return ""
+	}
+
+	return dateParsed.Format(layout)
+}
+
 // desc is a description for the application. Typically a longer statement
 // describing what the application does.
 //
