@@ -26,6 +26,7 @@ type info struct {
 	AuthorURL         *u.URL
 	Copyright         string
 	Date              *time.Time
+	DateFormat        string
 	Description       string
 	Development       bool
 	Docs              *u.URL
@@ -60,6 +61,7 @@ func TestJSON(t *testing.T) {
 		AuthorURL:         AuthorURL(),
 		Copyright:         Copyright(),
 		Date:              Date(),
+		DateFormat:        DateFormat(time.RFC3339),
 		Description:       Description(),
 		Development:       Development(),
 		Docs:              Docs(),
